@@ -17,8 +17,8 @@ Referencias principales:
 Aplicaciones validadas en literatura de ingeniería de software:
     - Bellon, S., et al. (2007). Comparison and evaluation of clone detection 
       tools. IEEE Transactions on Software Engineering, 33(9), 577-591.
-    - Roy, C. K., et al. (2009). Comparison and evaluation of code clone 
-      detection techniques and tools. Science of Computer Programming, 74(7), 470-495.
+    - Roy, C. K., et al. (2009). Comparison and evaluation of code clone
+      detection técnicas y herramientas. Science of Computer Programming, 74(7), 470-495.
 
 Autor: GitHub Copilot copiloteado por :) Fabián Astudillo-Salinas <fabian.astudillo.salinas@gmail.com>
 Licencia: MIT
