@@ -411,10 +411,67 @@ def generar_reporte_markdown(resultados: List[List], estadisticas: Dict,
     with open(f'{archivo_salida}.md', 'w', encoding='utf-8') as f:
         # Header del reporte
         f.write("# 🔍 Reporte de Similitud de Códigos Fuente\n\n")
-        f.write(f"**Fecha de generación:** {fecha_actual}\n")
-        f.write(f"**Versión:** 2.0\n")
-        f.write(f"**Archivos analizados:** {len(archivos_procesados)}\n")
-        f.write(f"**Total de comparaciones:** {len(resultados)}\n\n")
+        f.write("**Análisis Computacional de Similitud entre Códigos Fuente**\n")
+        f.write("*Basado en Métricas Validadas Científicamente*\n\n")
+        f.write("---\n\n")
+        f.write("## 📋 Información del Análisis\n\n")
+        f.write(f"- **Fecha de generación:** {fecha_actual}\n")
+        f.write(f"- **Versión del software:** 2.0\n")
+        f.write(f"- **Archivos analizados:** {len(archivos_procesados)}\n")
+        f.write(f"- **Total de comparaciones:** {len(resultados)}\n")
+        f.write(f"- **Métricas utilizadas:** Coseno, Jaccard, Levenshtein\n")
+        f.write(f"- **Algoritmos implementados:** Salton et al. (1975), Jaccard (1912), Levenshtein (1966)\n\n")
+        
+        # Resumen ejecutivo
+        if estadisticas:
+            f.write("## 📊 Resumen Ejecutivo\n\n")
+            
+            # Determinar el nivel general de similitud
+            promedio_general = (estadisticas['cosine_promedio'] + 
+                              estadisticas['jaccard_promedio'] + 
+                              estadisticas['levenshtein_promedio']) / 3
+            
+            if promedio_general >= 0.7:
+                nivel_similitud = "**ALTA**"
+                interpretacion = "Se detectaron similitudes significativas que requieren atención."
+            elif promedio_general >= 0.4:
+                nivel_similitud = "**MEDIA**"
+                interpretacion = "Se observan similitudes moderadas entre algunos archivos."
+            else:
+                nivel_similitud = "**BAJA**"
+                interpretacion = "Los archivos muestran diferencias considerables en su estructura."
+            
+            f.write(f"- **Nivel de similitud general:** {nivel_similitud} ({promedio_general:.3f})\n")
+            f.write(f"- **Interpretación:** {interpretacion}\n")
+            f.write(f"- **Métrica más discriminante:** ")
+            
+            # Encontrar la métrica con mayor variabilidad
+            variabilidad_coseno = estadisticas['cosine_max'] - estadisticas['cosine_min']
+            variabilidad_jaccard = estadisticas['jaccard_max'] - estadisticas['jaccard_min']  
+            variabilidad_levenshtein = estadisticas['levenshtein_max'] - estadisticas['levenshtein_min']
+            
+            max_variabilidad = max(variabilidad_coseno, variabilidad_jaccard, variabilidad_levenshtein)
+            if max_variabilidad == variabilidad_coseno:
+                f.write("Similitud del Coseno\n")
+            elif max_variabilidad == variabilidad_jaccard:
+                f.write("Índice de Jaccard\n")
+            else:
+                f.write("Distancia de Levenshtein\n")
+            
+            f.write(f"- **Archivos con mayor similitud:** ")
+            # Encontrar el par con mayor similitud
+            max_similitud = 0
+            par_similar = None
+            for resultado in resultados:
+                sim_max = max(resultado[2], resultado[3], resultado[4])
+                if sim_max > max_similitud:
+                    max_similitud = sim_max
+                    par_similar = (Path(resultado[0]).name, Path(resultado[1]).name)
+            
+            if par_similar:
+                f.write(f"`{par_similar[0]}` y `{par_similar[1]}` ({max_similitud:.3f})\n")
+            
+            f.write("\n")
         
         # Lista de archivos procesados
         f.write("## 📁 Archivos Analizados\n\n")
@@ -487,12 +544,68 @@ def generar_reporte_markdown(resultados: List[List], estadisticas: Dict,
         # Metodología
         f.write("## 🔬 Metodología\n\n")
         f.write("Este análisis utiliza tres métricas de similitud validadas científicamente:\n\n")
-        f.write("1. **Similitud del Coseno:** Mide el ángulo entre vectores de frecuencia de tokens\n")
-        f.write("2. **Índice de Jaccard:** Calcula similitud basada en intersección/unión de conjuntos\n")
-        f.write("3. **Ratio de Levenshtein:** Distancia de edición normalizada entre textos\n\n")
+        f.write("1. **Similitud del Coseno:** Mide el ángulo entre vectores de frecuencia de tokens [1,2]\n")
+        f.write("2. **Índice de Jaccard:** Calcula similitud basada en intersección/unión de conjuntos [3,4]\n")
+        f.write("3. **Ratio de Levenshtein:** Distancia de edición normalizada entre textos [5,6]\n\n")
+        
+        # Referencias académicas
+        f.write("## 📚 Referencias\n\n")
+        f.write("**[1]** Salton, G., Wong, A., & Yang, C. S. (1975). A vector space model for automatic indexing. *Communications of the ACM*, 18(11), 613-620. DOI: 10.1145/361219.361220\n\n")
+        f.write("**[2]** Singhal, A. (2001). Modern information retrieval: A brief overview. *IEEE Data Engineering Bulletin*, 24(4), 35-43.\n\n")
+        f.write("**[3]** Jaccard, P. (1912). The distribution of the flora in the alpine zone. *New Phytologist*, 11(2), 37-50. DOI: 10.1111/j.1469-8137.1912.tb05611.x\n\n")
+        f.write("**[4]** Real, R., & Vargas, J. M. (1996). The probabilistic basis of Jaccard's index of similarity. *Systematic Biology*, 45(3), 380-385. DOI: 10.1093/sysbio/45.3.380\n\n")
+        f.write("**[5]** Levenshtein, V. I. (1966). Binary codes capable of correcting deletions, insertions, and reversals. *Soviet Physics Doklady*, 10(8), 707-710.\n\n")
+        f.write("**[6]** Wagner, R. A., & Fischer, M. J. (1974). The string-to-string correction problem. *Journal of the ACM*, 21(1), 168-173. DOI: 10.1145/321796.321811\n\n")
+        
+        # Referencias adicionales para detección de clones
+        f.write("### Aplicaciones en Detección de Similitud de Código\n\n")
+        f.write("**[7]** Bellon, S., Koschke, R., Antoniol, G., Krinke, J., & Merlo, E. (2007). Comparison and evaluation of clone detection tools. *IEEE Transactions on Software Engineering*, 33(9), 577-591.\n\n")
+        f.write("**[8]** Roy, C. K., Cordy, J. R., & Koschke, R. (2009). Comparison and evaluation of code clone detection techniques and tools: A qualitative approach. *Science of Computer Programming*, 74(7), 470-495.\n\n")
+        
+        # Conclusiones automáticas
+        if estadisticas and len(resultados) > 0:
+            f.write("## 🎯 Conclusiones\n\n")
+            
+            promedio_general = (estadisticas['cosine_promedio'] + 
+                              estadisticas['jaccard_promedio'] + 
+                              estadisticas['levenshtein_promedio']) / 3
+            
+            # Análisis de consistencia entre métricas
+            similitudes_altas_coseno = sum(1 for r in resultados if r[2] >= 0.7)
+            similitudes_altas_jaccard = sum(1 for r in resultados if r[3] >= 0.7)
+            similitudes_altas_levenshtein = sum(1 for r in resultados if r[4] >= 0.7)
+            total_comparaciones = len(resultados)
+            
+            f.write("### Hallazgos Principal\n\n")
+            
+            if promedio_general >= 0.7:
+                f.write("- **Similitud significativa detectada**: Los archivos analizados muestran patrones estructurales y semánticos similares que sugieren origen común o reutilización de código.\n\n")
+            elif promedio_general >= 0.4:
+                f.write("- **Similitud moderada observada**: Existe cierto grado de similitud entre los archivos, posiblemente debido a convenciones de programación compartidas o funcionalidades similares.\n\n")
+            else:
+                f.write("- **Archivos diversos**: Los códigos analizados muestran diferencias sustanciales, indicando implementaciones independientes o enfoques distintos.\n\n")
+            
+            f.write("### Consistencia de Métricas\n\n")
+            if similitudes_altas_coseno > 0 and similitudes_altas_jaccard > 0 and similitudes_altas_levenshtein > 0:
+                f.write("- **Alta consistencia**: Las tres métricas coinciden en identificar similitudes altas, aumentando la confiabilidad del análisis.\n\n")
+            elif (similitudes_altas_coseno > 0) + (similitudes_altas_jaccard > 0) + (similitudes_altas_levenshtein > 0) >= 2:
+                f.write("- **Consistencia moderada**: Al menos dos métricas coinciden en los hallazgos principales.\n\n")
+            else:
+                f.write("- **Métricas divergentes**: Las diferentes métricas capturan aspectos distintos de similitud, sugiriendo patrones de similitud complejos.\n\n")
+            
+            f.write("### Recomendaciones\n\n")
+            if promedio_general >= 0.8:
+                f.write("- **Revisión necesaria**: Se recomienda revisar manualmente los archivos con alta similitud para evaluar posible duplicación o plagio.\n")
+                f.write("- **Refactorización**: Considerar la extracción de código común en módulos reutilizables.\n\n")
+            elif promedio_general >= 0.6:
+                f.write("- **Monitoreo recomendado**: Vigilar la evolución de similitudes en futuras versiones.\n")
+                f.write("- **Documentación**: Documentar las razones de similitudes altas si son intencionales.\n\n")
+            else:
+                f.write("- **Diversidad confirmada**: La variabilidad observada es esperada y saludable en el desarrollo de software.\n\n")
         
         f.write("---\n")
         f.write("*Reporte generado por Analizador de Similitud de Códigos Fuente v2.0*\n")
+        f.write("*Basado en algoritmos validados científicamente y mejores prácticas en análisis de código*\n")
 
 
 def generar_reporte_pdf(resultados: List[List], estadisticas: Dict, 
@@ -534,7 +647,14 @@ def generar_reporte_pdf(resultados: List[List], estadisticas: Dict,
                 f'--pdf-engine={motor}',
                 '-V', 'geometry:margin=1in',
                 '-V', 'fontsize=11pt',
-                '--metadata', 'title=Reporte de Similitud de Códigos Fuente'
+                '-V', 'linestretch=1.2',
+                '--metadata', 'title=Reporte de Similitud de Códigos Fuente',
+                '--metadata', 'author=Analizador de Similitud v2.0',
+                '--metadata', f'date={datetime.now().strftime("%Y-%m-%d")}',
+                '--metadata', 'subject=Análisis de Similitud de Código Fuente',
+                '--metadata', 'keywords=similitud,código,coseno,jaccard,levenshtein',
+                '--table-of-contents',
+                '--toc-depth=2'
             ]
             
             try:
