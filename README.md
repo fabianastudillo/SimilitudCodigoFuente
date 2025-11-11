@@ -9,10 +9,15 @@ Una herramienta avanzada para analizar y comparar la similitud entre archivos de
 - ✅ **Soporte multi-lenguaje** (Python, JavaScript, Java, C++, C#, etc.)
 - ✅ **Algoritmos optimizados** con menor uso de memoria
 - ✅ **Argumentos de línea de comandos** configurables
-- ✅ **Múltiples formatos de salida** (CSV, JSON)
+- ✅ **Múltiples formatos de salida** (CSV, JSON, MD, PDF)
 - ✅ **Estadísticas detalladas** y análisis resumido
 - ✅ **Documentación completa** con type hints
 - ✅ **Tokenización inteligente** que preserva palabras clave
+- ✅ **Reportes académicos** con referencias científicas completas
+- ✅ **Resumen ejecutivo automático** con interpretación inteligente
+- ✅ **Conclusiones automáticas** basadas en análisis estadístico
+- ✅ **Matriz de similitud visual** para múltiples archivos
+- ✅ **Detección automática** de similitudes altas y recomendaciones
 
 ### 📊 **Métricas de Similitud**
 - **Similitud del Coseno**: Mide el ángulo entre vectores de frecuencia de tokens [1,2]
@@ -67,6 +72,9 @@ python3 similitud_codigos_reporte.py *.py --output mi_reporte
 
 # Sin estadísticas en consola
 python3 similitud_codigos_reporte.py *.py --no-estadisticas
+
+# Análisis académico con umbral alto para detectar posible plagio
+python3 similitud_codigos_reporte.py Estudiante*.py --threshold 0.7 --formato pdf --output auditoria_plagio
 ```
 
 ### Argumentos Disponibles
@@ -79,6 +87,36 @@ archivos              Archivos de código fuente a comparar (2 o más)
 --version             Mostrar versión del programa
 -h, --help            Mostrar ayuda
 ```
+
+## 🎯 Casos de Uso Específicos
+
+### **Detección de Plagio Académico**
+```bash
+# Análisis de trabajos de estudiantes con reporte académico completo
+python3 similitud_codigos_reporte.py Estudiante*.py --formato pdf --threshold 0.6 --output auditoria_academica
+```
+**Características**: Resumen ejecutivo automático, referencias científicas, conclusiones basadas en evidencia estadística.
+
+### **Auditoría de Código Empresarial**
+```bash
+# Análisis de código base para identificar duplicaciones
+python3 similitud_codigos_reporte.py src/**/*.py --formato md --threshold 0.7 --output auditoria_codigo
+```
+**Características**: Matriz visual de similitud, recomendaciones de refactorización, detección automática de código duplicado.
+
+### **Investigación Académica**
+```bash
+# Análisis científico con documentación completa
+python3 similitud_codigos_reporte.py dataset/*.py --formato pdf --output paper_analisis
+```
+**Características**: Referencias académicas completas, metodología validada científicamente, formato de publicación profesional.
+
+### **Análisis de Portafolios**
+```bash
+# Comparación de múltiples proyectos con visualización
+python3 similitud_codigos_reporte.py proyecto*/*.py --formato md --output comparacion_proyectos
+```
+**Características**: Matriz de similitud visual, estadísticas comparativas, interpretación automática de patrones.
 
 ## 📋 Ejemplo de Salida
 
@@ -106,6 +144,31 @@ test_file1.py ↔ test_file2.py                                |   0.763 |    0.
 
 ✅ Reporte CSV generado: reporte_similitud.csv
 🎉 Análisis completado exitosamente!
+```
+
+### Ejemplo de Resumen Ejecutivo (Formato Markdown/PDF)
+```markdown
+## 📊 Resumen Ejecutivo
+
+- **Nivel de similitud general:** **ALTA** (0.796)
+- **Interpretación:** Se detectaron similitudes significativas que requieren atención.
+- **Métrica más discriminante:** Índice de Jaccard
+- **Archivos con mayor similitud:** `Estudiante2.py` y `Estudiante3.py` (0.960)
+
+## 🎯 Conclusiones
+
+### Hallazgos Principales
+- **Similitud significativa detectada**: Los archivos analizados muestran patrones 
+  estructurales y semánticos similares que sugieren origen común o reutilización de código.
+
+### Consistencia de Métricas  
+- **Alta consistencia**: Las tres métricas coinciden en identificar similitudes altas, 
+  aumentando la confiabilidad del análisis.
+
+### Recomendaciones
+- **Revisión necesaria**: Se recomienda revisar manualmente los archivos con alta 
+  similitud para evaluar posible duplicación o plagio.
+- **Refactorización**: Considerar la extracción de código común en módulos reutilizables.
 ```
 
 ### Archivo JSON
@@ -138,18 +201,27 @@ test_file1.py ↔ test_file2.py                                |   0.763 |    0.
 ```
 
 ### Reporte Markdown
+- **Encabezado académico profesional** con metadatos completos
+- **Resumen ejecutivo automático** con interpretación inteligente
 - **Tabla de archivos procesados** con numeración
-- **Matriz de similitud visual** para múltiples archivos (>3)
+- **Matriz de similitud visual** para múltiples archivos (>3) con colores
 - **Comparaciones detalladas** en formato tabla
-- **Estadísticas con gráficos ASCII** 
+- **Estadísticas con gráficos ASCII** y análisis de distribución
 - **Detección automática de similitudes altas** (≥ 0.7)
-- **Interpretación y metodología** incluidas
+- **Metodología con referencias numeradas** [1,2,3...]
+- **Referencias académicas completas** con DOIs
+- **Conclusiones automáticas** con recomendaciones específicas
 
-### Reporte PDF
+### Reporte PDF Académico
 - **Conversión automática** desde Markdown usando pandoc
+- **Múltiples motores PDF** (XeLaTeX, PDFLaTeX, LuaLaTeX) con fallback inteligente
 - **Formato profesional** con márgenes y tipografía optimizada
-- **Requiere pandoc instalado** (fallback a Markdown si no está disponible)
-- **Metadata del documento** incluida
+- **Tabla de contenidos automática** con navegación
+- **Metadata bibliográfica completa** (título, autor, fecha, palabras clave)
+- **Referencias académicas** con formato científico estándar
+- **Resumen ejecutivo** con hallazgos principales
+- **Conclusiones automáticas** y recomendaciones
+- **Fallback a Markdown** si pandoc no está disponible
 
 ## 🔧 Características Técnicas
 
@@ -164,11 +236,37 @@ test_file1.py ↔ test_file2.py                                |   0.763 |    0.
 - Ruby (`.rb`)
 - Go (`.go`)
 
-### Optimizaciones
-- **Algoritmo Levenshtein**: Complejidad espacial O(min(n,m)) en lugar de O(n×m)
-- **Tokenización inteligente**: Preserva palabras clave y estructura semántica
-- **Validación robusta**: Verificación de archivos antes del procesamiento
-- **Manejo de errores**: Continúa procesamiento aunque algunos archivos fallen
+### Optimizaciones y Mejoras Técnicas
+- **Algoritmo Levenshtein optimizado**: Complejidad espacial O(min(n,m)) en lugar de O(n×m)
+- **Tokenización inteligente**: Preserva palabras clave y estructura semántica por lenguaje
+- **Validación robusta**: Verificación completa de archivos antes del procesamiento
+- **Manejo de errores resiliente**: Continúa procesamiento aunque algunos archivos fallen
+- **Generación PDF robusta**: Múltiples motores (XeLaTeX, PDFLaTeX, LuaLaTeX) con timeout
+- **Matriz triangular eficiente**: Evita comparaciones redundantes en conjuntos grandes
+- **Análisis estadístico automático**: Cálculo inteligente de métricas discriminantes
+- **Detección de patrones**: Identificación automática de similitudes problemáticas
+
+### Análisis Inteligente Automático
+
+#### **Resumen Ejecutivo Automático**
+- **Nivel de similitud general**: Calculado automáticamente como promedio ponderado
+- **Interpretación inteligente**: Basada en umbrales científicos validados
+- **Métrica más discriminante**: Identificada por análisis de variabilidad
+- **Archivos con mayor similitud**: Detectados automáticamente con valores exactos
+
+#### **Conclusiones Automáticas**
+- **Hallazgos principales**: Análisis estadístico de patrones de similitud
+- **Consistencia de métricas**: Evaluación de concordancia entre diferentes métricas
+- **Recomendaciones específicas**: Sugerencias basadas en nivel de similitud detectado
+  - **Alta similitud (≥0.8)**: Revisión manual requerida, posible refactorización
+  - **Similitud media (0.6-0.8)**: Monitoreo recomendado, documentación necesaria  
+  - **Baja similitud (<0.6)**: Diversidad saludable confirmada
+
+#### **Matriz de Similitud Visual**
+- **Representación triangular**: Evita redundancias en comparaciones
+- **Códigos de colores**: 🔴 Alta (≥0.8), 🟡 Media (0.6-0.8), 🟢 Baja (0.4-0.6), ⚪ Muy baja (<0.4)
+- **Activación automática**: Para conjuntos de más de 3 archivos
+- **Navegación intuitiva**: Identificación rápida de similitudes problemáticas
 
 ### Interpretación de Resultados
 - **0.0 - 0.3**: Similitud baja (códigos muy diferentes)
@@ -194,6 +292,27 @@ Las técnicas implementadas están respaldadas por investigación específica en
 - **Detección de plagio académico**  
 - **Refactoring y mantenimiento de código**
 - **Auditorías de propiedad intelectual**
+
+### Rigor Académico y Científico
+
+#### **Validación Científica**
+- **8 referencias académicas** de journals peer-reviewed (ACM, IEEE, Elsevier)
+- **Algoritmos validados** por la comunidad científica internacional
+- **Metodología reproducible** con implementaciones estándar
+- **Citas numeradas** integradas en reportes [1,2,3...]
+
+#### **Características de Reportes Académicos**
+- **Metadata bibliográfica completa**: Autor, fecha, palabras clave, DOIs
+- **Tabla de contenidos automática**: Navegación profesional en PDF
+- **Resumen ejecutivo**: Hallazgos principales basados en evidencia estadística
+- **Conclusiones automáticas**: Interpretación científica de resultados
+- **Recomendaciones específicas**: Basadas en umbrales validados científicamente
+
+#### **Formato de Publicación**
+- **Estilo académico profesional**: Apropiado para tesis, papers, reportes técnicos
+- **Referencias con DOI**: Enlaces directos a publicaciones originales
+- **Metodología transparente**: Algoritmos y parámetros claramente documentados
+- **Interpretación estadística**: Análisis de significancia y consistencia entre métricas
 
 ## 🤝 Contribuir
 
