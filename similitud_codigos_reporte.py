@@ -20,7 +20,7 @@ Aplicaciones validadas en literatura de ingeniería de software:
     - Roy, C. K., et al. (2009). Comparison and evaluation of code clone 
       detection techniques and tools. Science of Computer Programming, 74(7), 470-495.
 
-Autor: GitHub Copilot
+Autor: GitHub Copilot copiloteado por :) Fabián Astudillo-Salinas <fabian.astudillo.salinas@gmail.com>
 Licencia: MIT
 Fecha: Noviembre 2025
 """
